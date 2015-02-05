@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!--<parent>-->
+        <!--<groupId>org.wso2.carbon</groupId>-->
+        <!--<artifactId>identity</artifactId>-->
+        <!--<version>4.2.0</version>-->
+        <!--<relativePath>../../pom.xml</relativePath>-->
+    <!--</parent>-->
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.wso2.carbon</groupId>
+    <artifactId>org.wso2.carbon.identity.sso.saml.artifact.resolution</artifactId>
+    <version>4.2.3</version>
+    <packaging>bundle</packaging>
+    <name>SAML SSO - Artifact Resolution Service</name>
+
+    <repositories>
+        <repository>
+            <id>wso2-nexus</id>
+            <name>WSO2 internal Repository</name>
+            <url>http://maven.wso2.org/nexus/content/groups/wso2-public/</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy>
+            </releases>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.wso2.carbon</groupId>
+            <artifactId>org.wso2.carbon.identity.sso.saml</artifactId>
+            <version>4.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon</groupId>
+            <artifactId>org.wso2.carbon.core</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>opensaml.wso2</groupId>
+            <artifactId>opensaml2</artifactId>
+            <version>2.4.1.wso2v1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon</groupId>
+            <artifactId>org.wso2.carbon.logging</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>bouncycastle</groupId>
+            <artifactId>bcprov-jdk15</artifactId>
+            <version>132</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-scr-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Name>${project.artifactId}</Bundle-Name>
+
+                              <!--<Bundle-Activator>org.wso2.carbon.identity.sso.saml.artifact.resolution.internal.ArtifactResolutionServiceComponent</Bundle-Activator>-->
+
+                        <!--<Private-Package>org.wso2.carbon.identity.sso.saml.internal,</Private-Package>-->
+                        <Import-Package>  org.wso2.carbon.utils.*,
+                            org.osgi.service.component.*,
+                            org.osgi.service.http.*,
+                            org.wso2.carbon.identity.sso.saml.*,
+                            javax.servlet;version="${imp.pkg.version.javax.servlet}",
+                            javax.servlet.http;version="${imp.pkg.version.javax.servlet}",
+                            *;resolution:=optional
+                        </Import-Package>
+
+                        <Embed-Transitive>true</Embed-Transitive>
+
+                        <!--<Embed-Dependency>bcprov-jdk15|naming-factory|naming-resources|commons-collections;scope=compile|runtime;inline=false</Embed-Dependency>-->
+                        <DynamicImport-Package>*</DynamicImport-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <properties>
+        <imp.pkg.version.javax.servlet>[2.6.0, 3.0.0]</imp.pkg.version.javax.servlet>
+    </properties>
+</project>
