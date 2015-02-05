@@ -71,12 +71,8 @@ public class ArtifactResolveProcessor {
             return false;
         } else {
             String domainName = CarbonContext.getThreadLocalCarbonContext().getTenantDomain();
-            SAMLSSOServiceProviderDO serviceProviderConfigs = SSOServiceProviderConfigManager.getInstance()
-                    .getServiceProvider(artifactResolve.getIssuer().getValue());
-            // TODO how to get the CertAlias
-            //String alias = serviceProviderConfigs.getCertAlias();
-            //return validateXMLSignature(artifactResolve, alias, domainName);
-            return true;
+            String alias = "wso2carbon";
+            return validateXMLSignature(artifactResolve, alias, domainName);
         }
     }
 
